@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{tags|join:', '}} | Image view | PicTag
+{% endblock %}
+
+{% block content %}
+    <main>
+        {% include 'images/includes/tags_sidebar.html' %}
+        <section class="content">
+            <div class="picture-detail">
+                <img src="{{ image.image.url }}">
+            </div>
+        </section>
+    </main>
+{% endblock %}

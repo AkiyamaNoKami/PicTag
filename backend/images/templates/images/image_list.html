@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% load thumbnail %}
+{% block title %}
+    {% if q %}{{q}}{% else %}All posts{% endif %}
+    {% if is_paginated %}| Page {{page_obj.number}}{% endif %}
+    | PicTag
+{% endblock %}
+
+{% block content %}
+
+<main>
+    {% include 'images/includes/tags_sidebar.html' %}
+    <section class="content">
+        <ul class="picture-list">
+            {% for image in images %}
+                <li>
+                    <a href="{% url 'images:image-detail' image.pk %}" %}>
+                        <img src="{% thumbnail image.image 150x150 %}">
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+        {% if is_paginated %}
+            <ul class="pagination">
+                {% for page in paginator.page_range %}
+                <li{% if page_obj.number == page %} class="current"{% endif %}>
+                    {% if page_obj.number != page %}
+                        <a href="?{% if q %}q={{ q }}&{% endif %}page={{ page }}">{{ page }}</a>
+                    {% else %}
+                        {{ page }}
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    </section>
+</main>
+
+ {% endblock %}

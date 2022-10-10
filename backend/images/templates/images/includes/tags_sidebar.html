@@ -1,0 +1,12 @@
+<aside>
+    <ul class="tag-list">
+        {% for tag in tags %}
+            <li>
+                <a href="{% url 'images:image_list' %}?q={{ tag.name }}">
+                    <span class="name">{{ tag.name }}</span>
+                    <span class="count">{{ tag.count }}</span>
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+</aside>

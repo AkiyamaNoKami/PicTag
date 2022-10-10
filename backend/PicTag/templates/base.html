@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script type="text/javascript" src="{% static 'js/autocomplete.js' %}"></script>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+    <div class="page_icon">
+      <img src={% static 'images/icon.png' %}>
+      <p class="page_icon_text">ImageTagger</p>
+    </div>
+    <div class="main_block">
+        <div class="links">
+                <a class="a_posts link" href="#">Posts</a>
+                <a class="a_comments link" href="#">Comments</a>
+                <a class="a_tags link" href="#">Tags</a>
+                <a class="a_forum link" href="#">Forum</a>
+            {% if user.is_authenticated %}
+                <a class="a_forum link" href="{% url 'users:logout' %}?next={{ request.get_full_path }}">Logout</a>
+                <a class="a_profile link" href="{% url 'users:profile' %}">Profile</a>
+                <a href="{% url 'images:image-upload' %}">Upload</a>
+            {% else %}
+                <a class="a_forum link" href="{% url 'users:login' %}?next={{ request.get_full_path }}">Login</a>
+                <a class="a_forum link" href="{% url 'users:register' %}?next={{ request.get_full_path }}">Registration</a>
+            {% endif %}
+        </div>
+        <form id="main-search" class="searcher" autocomplete="off">
+            <div class="search-group">
+              <input id="main-search-q" type="search" name="q" placeholder="Input tag" value="{{ q|default:""}}">
+              <ul id="main-search-suggestions">
+              </ul>
+            </div>
+            <input type="submit" value="Search">
+        </form>
+    </div>
+    {% block content %}{% endblock %}
+</body>
+</html>
